@@ -3,7 +3,8 @@ import java.util.Arrays;
 public class rentalSystem {
 	private customer[] customerList;
 	private car[] carList;
-	private String[][] rentalBook;
+	//private String[][] rentalBook;
+	public orderSystem rentalBook;
 	public revenueSystem records;
 	
 	/**
@@ -12,7 +13,7 @@ public class rentalSystem {
 	rentalSystem(){
 		customerList = new customer[10];
 		carList = new car[10];
-		rentalBook = new String[10][4];
+		rentalBook = new orderSystem();
 		records = new revenueSystem();
 	}
 	/**
@@ -243,7 +244,7 @@ public class rentalSystem {
 				if(carList[i].getCustomerId()==null) {
 					carList[i].setCustomerId(customerID);
 					System.out.println(content + " is successfully rented");
-					addRentalBook(getCustomerNameByInfo(customerID), customerID, carList[i].getCarName(), carList[i].getCarId());
+					rentalBook.addRentalBook(getCustomerNameByInfo(customerID), customerID, carList[i].getCarName(), carList[i].getCarId());
 				}else {
 					System.out.println(content + " is already rented by someone");
 				}
@@ -252,79 +253,7 @@ public class rentalSystem {
 		}
 		
 	}
-	public void printRentalBook() {
-		for(int i=0;i<rentalBook.length;i++) {
-			System.out.print(i + ": ");
-			for (int j=0;j<rentalBook[i].length;j++) {
-				switch(j) {
-				case 0:
-					System.out.print("Customer Name: ");
-					break;
-				case 1:
-					System.out.print(", Customer ID: ");
-					break;
-				case 2:
-					System.out.print(", Car Name: ");
-					break;
-				case 3:
-					System.out.print(", Car ID: ");
-					break;
-				}
-				if(rentalBook[i][j]!=null) {
-					System.out.print(rentalBook[i][j]);
-				}
-				else System.out.print("Empty_Slot");
-			}
-			System.out.println();
-		}
-	}
-	/**
-	 * add information of rental into record to keep track of all rentals
-	 * @param customerName
-	 * @param customerId
-	 * @param carName
-	 * @param carId
-	 */
-	public void addRentalBook(String customerName, String customerId, String carName, String carId) throws IllegalArgumentException{
-		if(customerName==null||customerId==null||carName==null||carId==null||customerName.length()==0||customerId.length()==0||carName.length()==0||carId.length()==0) {
-			throw new IllegalArgumentException("addRentalBook input cannot be null or with a length of 0");
-		}
-		for(int i=0;i<rentalBook.length;i++) {
-			if(rentalBook[i][0] == null || rentalBook[i][0].length()==0) {
-				rentalBook[i][0] = customerName;
-				rentalBook[i][1] = customerId;
-				rentalBook[i][2] = carName;
-				rentalBook[i][3] = carId;
-				break;
-			}
-			if(i==rentalBook.length-1) {
-				//In case if rental book is full, extend its capacity
-				String[][] tempList = new String[rentalBook.length+10][4];
-				for(int k=0; k<rentalBook.length;k++) {
-					tempList[k] = rentalBook[k];
-				}
-				rentalBook = tempList;
-			}
-		}
-	}
-	/**
-	 * to remove a rental record from the rental book only needs customer ID and car ID as input
-	 * @param customerId
-	 * @param carId
-	 * @return
-	 */
-	public boolean removeRentalBook(String customerId, String carId) {
-		if(customerId==null||carId==null||customerId.length()==0||carId.length()==0) {
-			throw new IllegalArgumentException("removeRentalBook input cannot be null or with a length of 0");
-		}
-		for(int i=0;i<rentalBook.length;i++) {
-			if(rentalBook[i][1] == customerId || rentalBook[i][3] == carId) {
-				rentalBook[i] = new String[4];
-				return true;
-			}
-		}
-		return false;
-	}
+	
 	/**
 	 * Print car list
 	 */
@@ -354,9 +283,9 @@ public class rentalSystem {
 	 */
 	public void returnCar(String customerInfo, String carInfo, String date) throws IllegalArgumentException{
 		if(customerInfo==null||carInfo==null) throw new IllegalArgumentException("input cannot be null");
-		for(int i=0;i<rentalBook.length;i++) {
-			if(rentalBook[i][0] != null || rentalBook[i][0].length() !=0) {
-				if((customerInfo==rentalBook[i][0]||customerInfo==rentalBook[i][1])&&(carInfo==rentalBook[i][2]||carInfo==rentalBook[i][3])) {
+		for(int i=0;i<rentalBook.rentalBook.length;i++) {
+			if(rentalBook.rentalBook[i][0] != null || rentalBook.rentalBook[i][0].length() !=0) {
+				if((customerInfo==rentalBook.rentalBook[i][0]||customerInfo==rentalBook.rentalBook[i][1])&&(carInfo==rentalBook.rentalBook[i][2]||carInfo==rentalBook.rentalBook[i][3])) {
 					for(int j =0;j< carList.length;j++) {
 						if(carList[j]!=null) {
 							if(carList[j].getCarName()==carInfo||carList[j].getCarId()==carInfo) {
@@ -367,7 +296,7 @@ public class rentalSystem {
 						}
 					}
 				}
-					rentalBook[i] = new String[4];
+					rentalBook.rentalBook[i] = new String[4];
 					System.out.println(customerInfo + " successfully returned " + carInfo);
 					return;
 			}
