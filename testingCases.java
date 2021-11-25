@@ -17,20 +17,20 @@ public class tests{
 	      currentSystem.addCar(car3);
 	      currentSystem.addCar(car4);
 	      System.out.println("Current RentalBook: ");
-	      currentSystem.printRentalBook();
+	      currentSystem.rentalBook.printRentalBook();
 	      currentSystem.printCarList();
 	      currentSystem.printCustomerList();
 	      currentSystem.rentACar(Haowei, "Mercedes");
 	      currentSystem.rentACar(David, "Mercedes");
 	      currentSystem.rentACar(David, "Jeep");
 	      System.out.println("Current RentalBook: ");
-	      currentSystem.printRentalBook();
+	      currentSystem.rentalBook.printRentalBook();
 	      currentSystem.returnCar(Haowei, "Mercedes", "01/21/2021");
 	      currentSystem.records.printRevenue();
 	      System.out.println("Current RentalBook: ");
-	      currentSystem.printRentalBook();
+	      currentSystem.rentalBook.printRentalBook();
 	      currentSystem.rentACar(David, "Mercedes");
 	      System.out.println("Current RentalBook: ");
-	      currentSystem.printRentalBook();
+	      currentSystem.rentalBook.printRentalBook();
 	    }
 	}
