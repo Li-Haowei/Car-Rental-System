@@ -25,7 +25,8 @@ public class tests{
 	      currentSystem.rentACar(David, "Jeep");
 	      System.out.println("Current RentalBook: ");
 	      currentSystem.printRentalBook();
-	      currentSystem.returnCar(Haowei, "Mercedes");
+	      currentSystem.returnCar(Haowei, "Mercedes", "01/21/2021");
+	      currentSystem.records.printRevenue();
 	      System.out.println("Current RentalBook: ");
 	      currentSystem.printRentalBook();
 	      currentSystem.rentACar(David, "Mercedes");
