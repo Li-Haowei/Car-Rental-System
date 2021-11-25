@@ -4,6 +4,7 @@ public class rentalSystem {
 	private customer[] customerList;
 	private car[] carList;
 	private String[][] rentalBook;
+	public revenueSystem records;
 	
 	/**
 	 * Constructor, takes no input and creats a carList abd a customerList
@@ -12,6 +13,7 @@ public class rentalSystem {
 		customerList = new customer[10];
 		carList = new car[10];
 		rentalBook = new String[10][4];
+		records = new revenueSystem();
 	}
 	/**
 	 * get the customer list
@@ -344,12 +346,13 @@ public class rentalSystem {
 		System.out.println();
 	}
 	/**
-	 * input both customer and car information to return the car
+	 * input customer and car information and which date to return the car
 	 * @param customerInfo
 	 * @param carInfo
+	 * @param date
 	 * @throws IllegalArgumentException
 	 */
-	public void returnCar(String customerInfo, String carInfo) throws IllegalArgumentException{
+	public void returnCar(String customerInfo, String carInfo, String date) throws IllegalArgumentException{
 		if(customerInfo==null||carInfo==null) throw new IllegalArgumentException("input cannot be null");
 		for(int i=0;i<rentalBook.length;i++) {
 			if(rentalBook[i][0] != null || rentalBook[i][0].length() !=0) {
@@ -358,6 +361,7 @@ public class rentalSystem {
 						if(carList[j]!=null) {
 							if(carList[j].getCarName()==carInfo||carList[j].getCarId()==carInfo) {
 								carList[j].setCustomerId(null);
+								records.addRecord(date, carList[j].getPrice());
 								break;
 							}
 						}
@@ -371,4 +375,3 @@ public class rentalSystem {
 		System.out.println("Return Fail, customer info or car info error, please double check.");
 	}
 }
-
